@@ -19,15 +19,13 @@ export default function TextLabView() {
   const [history, setHistory] = useState([]);
   const [historyOpen, setHistoryOpen] = useState(false);
 
-  async function openHistory() {
-    setHistoryOpen(true);
-    try {
-      const res = await fetch(`${API}/api/history`);
-      setHistory(await res.json());
-    } catch {
-      // 后端没起来时不让页面崩掉，弹窗显示"还没有记录"
-    }
-  }
+// TextLabView 里，点开弹窗时拉历史
+async function openHistory() {
+  setHistoryOpen(true);
+  const res = await fetch(`${API}/api/history`, { credentials: "include" });
+  setHistory(await res.json());
+}
+
 
   return (
     <AnimatedCardGrid className="dashboard-grid">
